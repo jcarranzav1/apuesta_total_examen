@@ -4,22 +4,20 @@ import (
 	"log"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/kelseyhightower/envconfig"
 )
 
 type Config struct {
-	ServerPort        int           `required:"true" split_words:"true"`
-	Postfix           string        `required:"true"`
-	DbHost            string        `required:"true" split_words:"true"`
-	DbPort            int           `required:"true" split_words:"true"`
-	DbUser            string        `required:"true" split_words:"true"`
-	DbPassword        string        `required:"true" split_words:"true"`
-	DbName            string        `required:"true" split_words:"true"`
-	JwtExpirationTime time.Duration `required:"true" split_words:"true"`
-	JwtSecretKey      []byte        `required:"true" split_words:"true"`
+	ServerPort int    `required:"true" split_words:"true"`
+	ServerHost string `required:"true" split_words:"true"`
+	Postfix    string `required:"true"`
+	DbHost     string `required:"true" split_words:"true"`
+	DbPort     int    `required:"true" split_words:"true"`
+	DbUser     string `required:"true" split_words:"true"`
+	DbPassword string `required:"true" split_words:"true"`
+	DbName     string `required:"true" split_words:"true"`
 }
 
 var once sync.Once

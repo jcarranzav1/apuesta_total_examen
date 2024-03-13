@@ -5,9 +5,9 @@ import (
 	"log"
 
 	"ApuestaTotal/config"
+	"ApuestaTotal/internal/products/infrastructure/adapters/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 func NewConnection() *gorm.DB {
@@ -22,14 +22,18 @@ func NewConnection() *gorm.DB {
 	)
 
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info), // Cambiar a logger.Silent en PROD
+		//Logger: logger.Default.LogMode(logger.Info), // Cambiar a logger.Silent en PROD
 	})
 	if err != nil {
 		log.Fatal("Failed to connect to database: /n ", err)
 	}
 
 	log.Println("Database Connected")
-	//log.Println("Running migrations...")
+	log.Println("Running migrations...")
+
+	_ = database.AutoMigrate(
+		&model.Product{},
+	)
 
 	return database
 }
