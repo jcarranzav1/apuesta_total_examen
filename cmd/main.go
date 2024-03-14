@@ -6,7 +6,7 @@ import (
 
 	"ApuestaTotal/cmd/providers"
 	"ApuestaTotal/config"
-	"ApuestaTotal/internal/products/infrastructure/router"
+	"ApuestaTotal/pkg/router"
 	"github.com/labstack/echo/v4"
 )
 

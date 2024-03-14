@@ -5,7 +5,11 @@ import (
 	"log"
 
 	"ApuestaTotal/config"
-	"ApuestaTotal/internal/products/infrastructure/adapters/model"
+	modelBill "ApuestaTotal/internal/bill/infrastructure/adapters/model"
+	modelCart "ApuestaTotal/internal/cart/infrastructure/adapters/model"
+	modelPayment "ApuestaTotal/internal/payment/infrastructure/adapters/model"
+	modelProducts "ApuestaTotal/internal/products/infrastructure/adapters/model"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -32,7 +36,11 @@ func NewConnection() *gorm.DB {
 	log.Println("Running migrations...")
 
 	_ = database.AutoMigrate(
-		&model.Product{},
+		&modelProducts.Product{},
+		&modelCart.Cart{},
+		&modelCart.Item{},
+		&modelPayment.Payment{},
+		&modelBill.Bill{},
 	)
 
 	return database

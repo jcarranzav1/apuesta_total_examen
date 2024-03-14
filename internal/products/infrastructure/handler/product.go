@@ -11,7 +11,7 @@ import (
 
 const (
 	getProductSuccess    = "Get Product Success"
-	getAllProductSuccess = "Get All Products Success"
+	getAllProductSuccess = "Get All Items Success"
 	createProductSuccess = "Product Created Successfully"
 	updateProductSuccess = "Product Updated Successfully"
 )

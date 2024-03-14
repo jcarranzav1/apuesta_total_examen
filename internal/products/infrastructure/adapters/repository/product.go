@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 
 	"ApuestaTotal/internal/products/domain/dto"
 	"ApuestaTotal/internal/products/domain/entity"
@@ -15,7 +14,7 @@ type productRepository struct {
 	db *gorm.DB
 }
 
-func NewAudienceRepository(db *gorm.DB) ports.Product {
+func NewProductRepository(db *gorm.DB) ports.Product {
 	return &productRepository{
 		db,
 	}
@@ -54,7 +53,6 @@ func (repository productRepository) Create(ctx context.Context, newProduct dto.P
 
 		return entity.Product{}, err
 	}
-	fmt.Println(newProduct, modelProduct)
 	return modelProduct.ToProductDomain(), nil
 }
 

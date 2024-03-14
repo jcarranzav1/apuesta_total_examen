@@ -23,9 +23,9 @@ type productApp struct {
 	productRepository ports.Product
 }
 
-func NewProductApplication(alertsRepo ports.Product) Product {
+func NewProductApplication(productRepo ports.Product) Product {
 	return &productApp{
-		alertsRepo,
+		productRepo,
 	}
 }
 

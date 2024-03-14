@@ -1,9 +1,13 @@
 package model
 
-import "ApuestaTotal/internal/products/domain/entity"
+import (
+	"ApuestaTotal/internal/products/domain/entity"
+	"gorm.io/gorm"
+)
 
 type Product struct {
-	ID    int
+	gorm.Model
+
 	Name  string
 	Price float64
 	Stock int
