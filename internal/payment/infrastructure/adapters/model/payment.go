@@ -18,6 +18,7 @@ type Payment struct {
 	Currency      string    `json:"currency"`
 	PaymentMethod string    `json:"payment_method"`
 	Products      []Product `gorm:"type:json" json:"products"`
+	Status        string    `json:"´status"`
 }
 
 func (p *Payment) ToPaymentDomain() entity.Payment {
@@ -36,5 +37,6 @@ func (p *Payment) ToPaymentDomain() entity.Payment {
 		Currency:      p.Currency,
 		PaymentMethod: p.PaymentMethod,
 		Products:      domainProducts,
+		Status:        p.Status,
 	}
 }

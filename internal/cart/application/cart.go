@@ -15,7 +15,7 @@ import (
 type Cart interface {
 	GetById(ctx context.Context, id uint) (entity.Cart, error)
 	CreateCart(ctx context.Context, newCart dto.CreateProductDTO) (entity.Cart, error)
-	RemoveCart(ctx context.Context, id uint) error
+	RemoveCart(ctx context.Context, id uint) (entity.Cart, error)
 	AddProduct(ctx context.Context, newProduct dto.AddOrUpdateProductDTO) error
 	RemoveProduct(ctx context.Context, removeProduct dto.RemoveProductDTO) error
 	UpdateStock(ctx context.Context, updateProduct dto.AddOrUpdateProductDTO) error
@@ -54,14 +54,14 @@ func (app *cartApp) CreateCart(ctx context.Context, newCart dto.CreateProductDTO
 	return cartCreated, nil
 }
 
-func (app *cartApp) RemoveCart(ctx context.Context, id uint) error {
-	err := app.cartRepository.RemoveCart(ctx, id)
+func (app *cartApp) RemoveCart(ctx context.Context, id uint) (entity.Cart, error) {
+	cartRemoved, err := app.cartRepository.RemoveCart(ctx, id)
 
 	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		return entity.Cart{}, echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
-	return nil
+	return cartRemoved, nil
 }
 
 func (app *cartApp) AddProduct(ctx context.Context, newProduct dto.AddOrUpdateProductDTO) error {

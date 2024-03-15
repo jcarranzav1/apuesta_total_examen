@@ -61,16 +61,17 @@ func (repository cartRepository) CreateCart(ctx context.Context, newCart dto.Cre
 	return modelCart.ToProductDomain(), nil
 }
 
-func (repository cartRepository) RemoveCart(ctx context.Context, id uint) error {
+func (repository cartRepository) RemoveCart(ctx context.Context, id uint) (entity.Cart, error) {
 	var modelCart = model.Cart{}
 
 	if err := repository.db.WithContext(ctx).
+		Clauses(clause.Returning{}).
 		Select("Items").
 		Unscoped().
 		Delete(&modelCart, id).Error; err != nil {
-		return err
+		return entity.Cart{}, err
 	}
-	return nil
+	return modelCart.ToProductDomain(), nil
 }
 
 func (repository cartRepository) AddProduct(ctx context.Context, newProduct dto.AddOrUpdateProductDTO) error {

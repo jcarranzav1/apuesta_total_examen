@@ -13,5 +13,5 @@ type Payment struct {
 	Currency      string  // Moneda del pago
 	PaymentMethod string  // Método de pago (tarjeta de crédito, PayPal, etc.)
 	Products      []Product
-	//Status        string    // Estado del pago (pendiente, completado, fallido)
+	Status        string // Estado del pago (pendiente, completado, fallido)
 }

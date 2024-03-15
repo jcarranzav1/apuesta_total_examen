@@ -19,6 +19,9 @@ import (
 	handlerProduct "ApuestaTotal/internal/products/infrastructure/handler"
 	"ApuestaTotal/pkg/database"
 	"ApuestaTotal/pkg/router"
+	"ApuestaTotal/pkg/saga"
+	"ApuestaTotal/pkg/saga/activities"
+	groupWorkflow "ApuestaTotal/pkg/saga/groups"
 	"github.com/labstack/echo/v4"
 	"go.uber.org/dig"
 )
@@ -43,16 +46,20 @@ func BuildContainer() *dig.Container {
 	_ = Container.Provide(appCart.NewCartApplication)
 	_ = Container.Provide(appPayment.NewPaymentApplication)
 	_ = Container.Provide(appBill.NewBillApplication)
+	_ = Container.Provide(activities.NewActivitiesApplication)
+	_ = Container.Provide(saga.NewSaga)
 
 	_ = Container.Provide(handlerProduct.NewProductHandler)
 	_ = Container.Provide(handlerCart.NewCartHandler)
 	_ = Container.Provide(handlerPayment.NewPaymentHandler)
 	_ = Container.Provide(handlerBill.NewBillHandler)
+	_ = Container.Provide(saga.NewWorkFlow)
 
 	_ = Container.Provide(groupProduct.NewProduct)
 	_ = Container.Provide(groupCart.NewCart)
 	_ = Container.Provide(groupPayment.NewPayment)
 	_ = Container.Provide(groupBill.NewBill)
+	_ = Container.Provide(groupWorkflow.NewWorkflow)
 
 	_ = Container.Provide(router.New)
 

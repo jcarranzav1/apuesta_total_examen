@@ -84,13 +84,14 @@ func (handler *cartHandler) RemoveCart(context echo.Context) error {
 
 	cartId, _ := strconv.Atoi(context.Param("cartID"))
 
-	err := handler.cartApp.RemoveCart(ctx, uint(cartId))
+	cartRemoved, err := handler.cartApp.RemoveCart(ctx, uint(cartId))
 	if err != nil {
 		return err
 	}
 
 	return context.JSON(http.StatusOK, dto.Message{
 		Message: removeCartSuccess,
+		Data:    cartRemoved,
 	})
 }
 

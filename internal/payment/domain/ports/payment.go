@@ -9,5 +9,7 @@ import (
 
 type Payment interface {
 	Create(ctx context.Context, newPayment dto.PaymentCreate) (entity.Payment, error)
-	GetById(ctx context.Context, id int) (entity.Payment, error)
+	GetById(ctx context.Context, id uint) (entity.Payment, error)
+	UpdateStatus(ctx context.Context, updateStatus dto.UpdateStatus) error
+	Remove(ctx context.Context, id uint) error
 }

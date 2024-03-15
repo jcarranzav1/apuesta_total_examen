@@ -38,7 +38,7 @@ func (handler *productHandler) GetById(context echo.Context) error {
 
 	productId, _ := strconv.Atoi(context.Param("id"))
 
-	product, err := handler.productApp.GetById(ctx, productId)
+	product, err := handler.productApp.GetById(ctx, uint(productId))
 	if err != nil {
 		return err
 	}
@@ -95,7 +95,7 @@ func (handler *productHandler) Update(context echo.Context) error {
 
 	var product dto.ProductUpdate
 
-	product.ID = productId
+	product.ID = uint(productId)
 
 	if err := context.Bind(&product); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())

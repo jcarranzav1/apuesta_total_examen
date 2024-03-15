@@ -12,7 +12,7 @@ import (
 )
 
 type Payment interface {
-	GetById(ctx context.Context, id int) (entity.Payment, error)
+	GetById(ctx context.Context, id uint) (entity.Payment, error)
 }
 
 type paymentApp struct {
@@ -25,7 +25,7 @@ func NewPaymentApplication(paymentRepo ports.Payment) Payment {
 	}
 }
 
-func (app *paymentApp) GetById(ctx context.Context, id int) (entity.Payment, error) {
+func (app *paymentApp) GetById(ctx context.Context, id uint) (entity.Payment, error) {
 	payment, err := app.paymentRepository.GetById(ctx, id)
 
 	if err != nil {

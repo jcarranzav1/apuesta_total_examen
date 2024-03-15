@@ -12,7 +12,7 @@ import (
 )
 
 type Bill interface {
-	GetById(ctx context.Context, id int) (entity.Bill, error)
+	GetById(ctx context.Context, id uint) (entity.Bill, error)
 }
 
 type billApp struct {
@@ -25,7 +25,7 @@ func NewBillApplication(paymentRepo ports.Bill) Bill {
 	}
 }
 
-func (app *billApp) GetById(ctx context.Context, id int) (entity.Bill, error) {
+func (app *billApp) GetById(ctx context.Context, id uint) (entity.Bill, error) {
 	bill, err := app.billRepository.GetById(ctx, id)
 
 	if err != nil {

@@ -32,7 +32,7 @@ func (handler *billHandler) GetById(context echo.Context) error {
 
 	billId, _ := strconv.Atoi(context.Param("id"))
 
-	bill, err := handler.billApp.GetById(ctx, billId)
+	bill, err := handler.billApp.GetById(ctx, uint(billId))
 	if err != nil {
 		return err
 	}

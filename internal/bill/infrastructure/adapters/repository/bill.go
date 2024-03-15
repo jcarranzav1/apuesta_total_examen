@@ -20,7 +20,7 @@ func NewBillRepository(db *gorm.DB) ports.Bill {
 	}
 }
 
-func (repository billRepository) GetById(ctx context.Context, id int) (entity.Bill, error) {
+func (repository billRepository) GetById(ctx context.Context, id uint) (entity.Bill, error) {
 	var modelBill = model.Bill{}
 
 	if result := repository.db.WithContext(ctx).First(&modelBill, id); result.Error != nil {
@@ -56,4 +56,15 @@ func (repository billRepository) Create(ctx context.Context, newPayment dto.Bill
 		return entity.Bill{}, err
 	}
 	return modelBill.ToBillDomain(), nil
+}
+
+func (repository billRepository) Remove(ctx context.Context, id uint) error {
+	var modelBill = model.Bill{}
+
+	if err := repository.db.WithContext(ctx).
+		Unscoped().
+		Delete(&modelBill, id).Error; err != nil {
+		return err
+	}
+	return nil
 }

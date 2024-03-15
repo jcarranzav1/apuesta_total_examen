@@ -20,7 +20,7 @@ func NewPaymentRepository(db *gorm.DB) ports.Payment {
 	}
 }
 
-func (repository paymentRepository) GetById(ctx context.Context, id int) (entity.Payment, error) {
+func (repository paymentRepository) GetById(ctx context.Context, id uint) (entity.Payment, error) {
 	var modelPayment model.Payment
 
 	if result := repository.db.WithContext(ctx).First(&modelPayment, id); result.Error != nil {
@@ -56,4 +56,27 @@ func (repository paymentRepository) Create(ctx context.Context, newPayment dto.P
 		return entity.Payment{}, err
 	}
 	return modelPayment.ToPaymentDomain(), nil
+}
+
+func (repository paymentRepository) UpdateStatus(ctx context.Context, updateStatus dto.UpdateStatus) error {
+	var modelPayment model.Payment
+
+	if err := repository.db.WithContext(ctx).
+		Model(&modelPayment).
+		Where("id = ?", updateStatus.ID).
+		Update("status", updateStatus.Status).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (repository paymentRepository) Remove(ctx context.Context, id uint) error {
+	var modelPayment model.Payment
+
+	if err := repository.db.WithContext(ctx).
+		Unscoped().
+		Delete(&modelPayment, id).Error; err != nil {
+		return err
+	}
+	return nil
 }

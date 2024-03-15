@@ -20,7 +20,7 @@ func NewProductRepository(db *gorm.DB) ports.Product {
 	}
 }
 
-func (repository productRepository) GetById(ctx context.Context, id int) (entity.Product, error) {
+func (repository productRepository) GetById(ctx context.Context, id uint) (entity.Product, error) {
 	var modelProduct model.Product
 
 	if result := repository.db.WithContext(ctx).First(&modelProduct, id); result.Error != nil {

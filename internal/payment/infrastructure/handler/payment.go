@@ -32,7 +32,7 @@ func (handler *paymentHandler) GetById(context echo.Context) error {
 
 	paymentId, _ := strconv.Atoi(context.Param("id"))
 
-	payment, err := handler.paymentApp.GetById(ctx, paymentId)
+	payment, err := handler.paymentApp.GetById(ctx, uint(paymentId))
 	if err != nil {
 		return err
 	}

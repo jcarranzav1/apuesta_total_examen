@@ -9,10 +9,9 @@ type ProductCreate struct {
 }
 
 type ProductUpdate struct {
-	ID    int     `json:"id" validate:"required"`
-	Name  string  `json:"name" validate:"max=60"`
-	Price float64 `json:"price"`
-	Stock int     `json:"stock"`
+	ID    uint   `json:"id" validate:"required"`
+	Name  string `json:"name" validate:"max=60"`
+	Stock int    `json:"stock"`
 }
 
 func (alert *ProductCreate) ValidateCreate() error {

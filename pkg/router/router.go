@@ -5,17 +5,19 @@ import (
 	routeCart "ApuestaTotal/internal/cart/infrastructure/groups"
 	routePayment "ApuestaTotal/internal/payment/infrastructure/groups"
 	routeProducts "ApuestaTotal/internal/products/infrastructure/groups"
+	routeWorkflow "ApuestaTotal/pkg/saga/groups"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 type Router struct {
-	server  *echo.Echo
-	product routeProducts.Product
-	cart    routeCart.Cart
-	payment routePayment.Payment
-	bill    routeBill.Bill
+	server   *echo.Echo
+	product  routeProducts.Product
+	cart     routeCart.Cart
+	payment  routePayment.Payment
+	bill     routeBill.Bill
+	workflow routeWorkflow.Workflow
 }
 
 func New(
@@ -24,6 +26,7 @@ func New(
 	cart routeCart.Cart,
 	payment routePayment.Payment,
 	bill routeBill.Bill,
+	workflow routeWorkflow.Workflow,
 
 ) *Router {
 	return &Router{
@@ -32,6 +35,7 @@ func New(
 		cart,
 		payment,
 		bill,
+		workflow,
 	}
 }
 
@@ -52,5 +56,5 @@ func (router *Router) Init() {
 	router.cart.Resource(basePath)
 	router.payment.Resource(basePath)
 	router.bill.Resource(basePath)
-
+	router.workflow.Resource(basePath)
 }

@@ -9,5 +9,6 @@ import (
 
 type Bill interface {
 	Create(ctx context.Context, newBill dto.BillCreate) (entity.Bill, error)
-	GetById(ctx context.Context, id int) (entity.Bill, error)
+	GetById(ctx context.Context, id uint) (entity.Bill, error)
+	Remove(ctx context.Context, id uint) error
 }
