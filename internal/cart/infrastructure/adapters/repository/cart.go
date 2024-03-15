@@ -40,22 +40,32 @@ func (repository cartRepository) CreateCart(ctx context.Context, newCart dto.Cre
 		ProductID: newCart.ProductID,
 	}
 
-	if err := repository.db.WithContext(ctx).
-		Create(&modelCart).
-		Error; err != nil {
+	tx := repository.db.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	if err := tx.WithContext(ctx).Create(&modelCart).Error; err != nil {
+		tx.Rollback()
 		return entity.Cart{}, err
 	}
 
 	modelItem.CartID = modelCart.ID
 
-	if err := repository.db.WithContext(ctx).Create(&modelItem).Error; err != nil {
+	if err := tx.WithContext(ctx).Create(&modelItem).Error; err != nil {
+		tx.Rollback()
 		return entity.Cart{}, err
 	}
 
-	if result := repository.db.WithContext(ctx).
-		Preload(clause.Associations).
-		First(&modelCart, modelCart.ID); result.Error != nil {
+	if result := tx.WithContext(ctx).Preload(clause.Associations).First(&modelCart, modelCart.ID); result.Error != nil {
+		tx.Rollback()
 		return entity.Cart{}, result.Error
+	}
+
+	if err := tx.Commit().Error; err != nil {
+		return entity.Cart{}, err
 	}
 
 	return modelCart.ToProductDomain(), nil
